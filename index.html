@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>OptimalDown</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <h1 id="pageTitle">OptimalDown: Adventure Island</h1>
+    <div id="Notice">
+        <p>OptimalDown is a tool used to find the best starting position for your shift (assuming you are an elgin guard). This way you "end down"</p>
+        <h2>Notice!!!!</h2>
+        <p>OptimalDown is not affiliated with Adventure Island, Lords Park Family Aquatic Center, Wing Park Family Aquatic Center or Elgin Parks and Recreation.</p>
+        <p>The elgin pool this webpage is specific too is at the top of the page!</p>
+        <p>Currently, only the Adventure Island page is complete (Lords is next)</p>
+        <p>AI ONLY: If Down (which is default) is chosen, the possibility of therapy being closed is taken into account, so keep that in mind if you are wondering why one position is ranked higher than the other even though they may both end down.</p>
+        <p>OptimalDown is a work in progress and is not my only project, so please be patient as I work on it.</p>
+        <p>If somehow this page spreads around, dont fight over the best start spot or I will sabotage the algorithm and then everyone ends up</p>
+    </div>
+    <div id="shiftFormContainer">
+        <h2>Enter shift information below:</h2>
+        <form id="shiftForm">
+            <h3>Required Information:</h3>
+            <label for="shiftStart">Shift Start:</label>
+            <input type="time" id="shiftStart" name="shiftStart" required>
+            <br>
+            <label for="poolClose">Shift End / Pool Close (whichever is first):</label>
+            <input type="time" id="poolClose" name="shiftEnd" required>
+            <br>
+            <h3>Optional information:</h3>
+            <label for="shiftEnd">(ONLY FOR CLOSING SHIFTS) Shift End:</label>
+            <input type="time" id="shiftEnd" name="shiftEnd">
+            <br>
+            <div id="preferedEnd">
+                <p>OptimalDown will assume that your "Prefered End" is down, however if you are weird you can change it</p>
+                <label for="downTag">Down</label>
+                <input type="radio" id="downTag" name="preferedEnd" checked>
+                <label for="windowsTag">Windows</label>
+                <input type="radio" id="windowsTag" name="preferedEnd">
+                <label for="peninsulaTag">Peninsula</label>
+                <input type="radio" id="peninsulaTag" name="preferedEnd">
+                <label for="lapTag">Lap</label>
+                <input type="radio" id="lapTag" name="preferedEnd">
+                <label for="therapyTag">Therapy</label>
+                <input type="radio" id="therapyTag" name="preferedEnd">
+            </div>
+            <br>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
