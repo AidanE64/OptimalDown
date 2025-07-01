@@ -5,7 +5,10 @@ let poolEndinMinutes;
 let shiftLength;
 let shiftEndTime;
 let prefSpot;
-
+let hoursPassed;
+let numIndi;
+let secondStart;
+let positions = ["Down Before Lap", "Lap", "Therapy", "Down Before Windows", "Windows", "Peninsula", ];
 function convertToMinutes(t) {
     const [hours, minutes] = t.split(":").map(Number);
     return hours * 60 + minutes;
@@ -49,4 +52,25 @@ document.getElementById('shiftForm').addEventListener('submit', function(e) {
     poolEndinMinutes = convertToMinutes(adjustToPrevRotation(poolEnd));
     shiftLength = poolEndinMinutes - shiftStartinMinutes;
     document.getElementById('opDow').textContent = shiftLength;
+    hoursPassed = 0;
+    while (shiftLength >= 60) {
+        shiftLength -= 60;
+        hoursPassed++;
+    }
+    numIndi = 0;
+    numIndi = shiftLength / 20;
+    if (hoursPassed % 2 !== 0){
+        numIndi += 3;
+    }
+    const bestStart = positions[numIndi];
+    document.getElementById('firstBest').textContent = bestStart;
+    if (numIndi >= 3){
+        numIndi -= 3;
+        secondStart = positions[numIndi];
+    }
+    else {
+        numIndi += 3;
+        secondStart = positions[numIndi];
+    }
+    document.getElementById('secondBest').textContent = secondStart;
 });
