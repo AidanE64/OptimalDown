@@ -1,76 +1,92 @@
-let shiftStart;
-let poolEnd;
-let shiftStartinMinutes;
-let poolEndinMinutes;
-let shiftLength;
-let shiftEndTime;
+//Declare variables
+///Needed Input Variables
+let start;
+let end;
+///Calculated Variables
+let startData;
+let endData;
+let workLength;
 let prefSpot;
-let hoursPassed;
-let numIndi;
-let secondStart;
-let positions = ["Down Before Lap", "Lap", "Therapy", "Down Before Windows", "Windows", "Peninsula", ];
+let rotations;
+//Constants
+const AIpositions = ["Down Before Lap", "Lap", "Therapy", "Down Before Windows", "Windows", "Peninsula"];
+let LordsPositions;
+let WindPositions;
+//Overridable Variables
+let rotationMinutes = [17, 37, 57]
+
+
+// Event listener for the form submission
+document.getElementById('shiftForm').addEventListener('submit', function(e) {
+  // Prevent the default form submission behavior
+  e.preventDefault();
+  // Get the values from the form inputs
+  start = document.getElementById('shiftStart').value;
+  end = document.getElementById('poolClose').value;
+  // Convert the start and end times to minutes
+  startData = convertToMinutes(start);
+  endData = convertToMinutes(end);
+  // Get the preferred spot from the dropdown
+  prefSpot = document.querySelector('input[name="preferedEndR"]:checked')?.value;
+
+  //Below is the end data stuff
+  //gets the difference between the desired time and the last rotation before it, stores info in endData[1]
+  endData[1] = timeDown(endData[1]);
+  //needed number is now in endData[0]
+  endData[0] -= endData[1];
+  //Below is the start data stuff
+  //instead of creating a function to round up, we just add 19 min cuz itl do the same thing unless someone starts on the minute, in which case itl use that start
+  startData[1] = timeUp(startData[1]);
+  startData[0] += startData[1]; 
+
+  //find actual working time:
+  workLength = endData[0] - startData[0];
+  rotations = 0;
+  while (workLength >= 20){
+    rotations++;
+    workLength -= 20;
+    /*
+    if (rotations > 5){
+      rotations = 0;
+    }
+    */
+  }
+  console.log(rotations);
+});
+
+
+// Function to convert time in "HH:MM" format to total minutes
 function convertToMinutes(t) {
     const [hours, minutes] = t.split(":").map(Number);
-    return hours * 60 + minutes;
+    return [hours * 60 + minutes, minutes];
 }
 
-function adjustToNextRotation(timeStr) {
-  const rotationMinutes = [17, 37, 57];
-  let [hour, minute] = timeStr.split(":").map(Number);
-  const nextRotation = rotationMinutes.find(r => r >= minute);
-
-  if (nextRotation !== undefined) {
-    minute = nextRotation;
-  } else {
-    hour = (hour + 1) % 24;  // wrap around midnight
-    minute = rotationMinutes[0];
+// Fuction to find minutes to nearest LOWER time change
+function timeDown(t){
+  let calcArray = [];
+  for (let i = 0; i < rotationMinutes.length; i++){
+    calcArray.push(t - rotationMinutes[i])
   }
-  const pad = n => n.toString().padStart(2, "0");
-  return `${pad(hour)}:${pad(minute)}`;
-}
-
-function adjustToPrevRotation(timeStr) {
-  const rotationMinutes = [17, 37, 57];
-  let [hour, minute] = timeStr.split(":").map(Number);
-
-  const possibleRotations = rotationMinutes.filter(r => r <= minute);
-  if (possibleRotations.length > 0) {
-    minute = Math.max(...possibleRotations);
-  } else {
-    hour = (hour === 0) ? 23 : hour - 1;
-    minute = rotationMinutes[rotationMinutes.length - 1]; // 57
+  calcArray = calcArray.filter(num => num >= 0);
+  if (calcArray.length === 0){
+    return 3 + t;
+  } else{
+    calcArray = Math.min(...calcArray);
+    return calcArray;
   }
-  const pad = n => n.toString().padStart(2, "0");
-  return `${pad(hour)}:${pad(minute)}`;
 }
 
-document.getElementById('shiftForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    shiftStart = document.getElementById('shiftStart').value;
-    poolEnd = document.getElementById('poolClose').value;
-    shiftStartinMinutes = convertToMinutes(adjustToNextRotation(shiftStart));
-    poolEndinMinutes = convertToMinutes(adjustToPrevRotation(poolEnd));
-    shiftLength = poolEndinMinutes - shiftStartinMinutes;
-    document.getElementById('opDow').textContent = shiftLength;
-    hoursPassed = 0;
-    while (shiftLength >= 60) {
-        shiftLength -= 60;
-        hoursPassed++;
-    }
-    numIndi = 0;
-    numIndi = shiftLength / 20;
-    if (hoursPassed % 2 !== 0){
-        numIndi += 3;
-    }
-    const bestStart = positions[numIndi];
-    document.getElementById('firstBest').textContent = bestStart;
-    if (numIndi >= 3){
-        numIndi -= 3;
-        secondStart = positions[numIndi];
-    }
-    else {
-        numIndi += 3;
-        secondStart = positions[numIndi];
-    }
-    document.getElementById('secondBest').textContent = secondStart;
-});
+//Function to find minutes to nearest GREATER time change
+function timeUp(t){
+  let calcArray = [];
+  for (let i = 0; i < rotationMinutes.length; i++){
+    calcArray.push(rotationMinutes[i] - t);
+  }
+  calcArray = calcArray.filter(num => num >= 0);
+  if (calcArray.length === 0){
+    return 60 - t + rotationMinutes[0];
+  } else{
+    calcArray = Math.min(...calcArray);
+    return calcArray;
+  }
+}

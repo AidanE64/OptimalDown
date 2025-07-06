@@ -31,7 +31,7 @@
             <input type="time" id="shiftStart" name="shiftStart" required>
             <br>
             <br>
-            <label for="poolClose">Shift End / Pool Close (whichever is first):</label>
+            <label for="poolClose">I want to be at my prefered end at this time:</label>
             <input type="time" id="poolClose" name="shiftEnd" required>
             <br>
             <h3>Optional information:</h3>
@@ -41,15 +41,15 @@
             <div id="preferedEnd">
                 <p>OptimalDown will assume that your "Prefered End" is down, however if you are weird you can change it</p>
                 <label for="downTag">| Down >>></label>
-                <input type="radio" id="downTag" name="preferedEnd" checked>
+                <input type="radio" id="downTag" name="preferedEndR" checked>
                 <label for="windowsTag">| Windows >>></label>
-                <input type="radio" id="windowsTag" name="preferedEnd">
+                <input type="radio" id="windowsTag" name="preferedEndR">
                 <label for="peninsulaTag">| Peninsula >>></label>
-                <input type="radio" id="peninsulaTag" name="preferedEnd">
+                <input type="radio" id="peninsulaTag" name="preferedEndR">
                 <label for="lapTag">| Lap >>></label>
-                <input type="radio" id="lapTag" name="preferedEnd">
+                <input type="radio" id="lapTag" name="preferedEndR">
                 <label for="therapyTag">| Therapy >>></label>
-                <input type="radio" id="therapyTag" name="preferedEnd">
+                <input type="radio" id="therapyTag" name="preferedEndR">
                 |
             </div>
             <br>
@@ -68,31 +68,18 @@
             <h2>The Second Best:</h2>
             <h3 id="secondBest">(Spot 2 PlaceHolder)</h3>
             <p>This option ends down, but its after peninsula, so there is no chance to end with a long down.</p>
-            <h2>The Gamble Spot:</h2>
-            <h3 id="gamble">(Gamble PlaceHolder)</h3>
-            <p>You may end down here if Therapy is unoccupied, otherwise you will end up at therapy</p>
-            <h2>Down Before Up (DBU) 1:</h2>
-            <h3 id="beforeUp1">(Spot DBU 1)</h3>
-            <p>This spot will result in only a 20 min up before your end</p>
-            <h2>Down Before Up (DBU) 2:</h2>
-            <h3 id="beforeUp2">(Spot DBU 2)</h3>
-            <p>Same as DBU 1</p>
-            <h2>The Worst Spot:</h2>
-            <h3 id="theWorst">(Worst PlaceHolder)</h3>
-            <p>Results in a full up nomatter what</p>
-
-            
         </div>
 
         <h2>The Rest:</h2>
-        <ul>
-            <!--Only exists if "Down" is not chosen to be the pref spot-->
-            <li>(Spot 3 PlaceHolder)</li>
-            <!--Exist no matter what-->
-            <li>(Spot 4 PlaceHolder)</li>
-            <li>(Spot 5 PlaceHolder)</li>
-            <li>(Spot 6 PlaceHolder)</li>
-        </ul>
+        
+        <!--Only exists if "Down" is not chosen to be the pref spot-->
+        <p>(Spot 2 PlaceHolder)</p>
+        <!--Exist no matter what-->
+        <p>(Spot 3 PlaceHolder)</p>
+        <p>(Spot 4 PlaceHolder)</p>
+        <p>(Spot 5 PlaceHolder)</p>
+        <p>(Spot 6 PlaceHolder)</p>
+        
     </div>
 </body>
 </html>
