@@ -35,21 +35,29 @@
             <input type="time" id="poolClose" name="shiftEnd" required>
             <br>
             <h3>Optional information:</h3>
+            <div id="rotationTypeContainer">
+                <p>Choose your rotation type:</p>
+                <label for="20s">20s</label>
+                <input type="radio" id="20s" name="rotationType" value=20 checked>
+                <label for="30s">30s</label>
+                <input type="radio" id="30s" name="rotationType" value=30>
+            </div>
+            <br>
             <label for="shiftEnd">(ONLY FOR CLOSING SHIFTS) Shift End:</label>
             <input type="time" id="shiftEnd" name="shiftEnd">
             <br>
             <div id="preferedEnd">
                 <p>OptimalDown will assume that your "Prefered End" is down, however if you are weird you can change it</p>
                 <label for="downTag">| Down >>></label>
-                <input type="radio" id="downTag" name="preferedEndR" checked>
+                <input type="radio" id="downTag" name="preferedEndR" value = "down" checked>
                 <label for="windowsTag">| Windows >>></label>
-                <input type="radio" id="windowsTag" name="preferedEndR">
+                <input type="radio" id="windowsTag" value = "windows" name="preferedEndR">
                 <label for="peninsulaTag">| Peninsula >>></label>
-                <input type="radio" id="peninsulaTag" name="preferedEndR">
+                <input type="radio" id="peninsulaTag" value = "peninsula" name="preferedEndR">
                 <label for="lapTag">| Lap >>></label>
-                <input type="radio" id="lapTag" name="preferedEndR">
+                <input type="radio" id="lapTag" value = "lap" name="preferedEndR">
                 <label for="therapyTag">| Therapy >>></label>
-                <input type="radio" id="therapyTag" name="preferedEndR">
+                <input type="radio" id="therapyTag" value = "therapy" name="preferedEndR">
                 |
             </div>
             <br>

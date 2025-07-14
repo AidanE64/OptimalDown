@@ -8,50 +8,69 @@ let endData;
 let workLength;
 let prefSpot;
 let rotations;
+let chosenPositions;
+let rotationTime;
+let rotationType;
+let changeNumber;
 //Constants
-const AIpositions = ["Down Before Lap", "Lap", "Therapy", "Down Before Windows", "Windows", "Peninsula"];
+const AIOSpositions = ["Down Before Lap", "Lap Chair", "Lap Walking", "Therapy", "Down Before Windows", "Windows", "Peninsula"];
+const AIWPpositions = ["Down Before Windows", "Windows", "PeninsulaD"]
+const AIMGpositions = ["Down Before Lap", "Lap Chair", "Therapy"]
 let LordsPositions;
 let WindPositions;
 //Overridable Variables
-let rotationMinutes = [17, 37, 57]
+const AIOSrotationMinutes = [17, 37, 57];
+const AIMGrotationMinutes = [27, 57];
+const LProtationMinutes = [15, 35, 55];
 
 
 // Event listener for the form submission
 document.getElementById('shiftForm').addEventListener('submit', function(e) {
   // Prevent the default form submission behavior
   e.preventDefault();
-  // Get the values from the form inputs
+  ////////rotation types
+  //find the rotation type & rotations
+  chosenPositions = AIOSpositions;
+  rotationTime = AIOSrotationMinutes;
+  ///////////Start & End
+  // Get the start & End from the form inputs
   start = document.getElementById('shiftStart').value;
   end = document.getElementById('poolClose').value;
   // Convert the start and end times to minutes
   startData = convertToMinutes(start);
   endData = convertToMinutes(end);
+  //////////////Pref Spots
   // Get the preferred spot from the dropdown
   prefSpot = document.querySelector('input[name="preferedEndR"]:checked')?.value;
-
+  rotationType = parseInt(document.querySelector('input[name="rotationType"]:checked')?.value);
+  /////////////////End Data
   //Below is the end data stuff
   //gets the difference between the desired time and the last rotation before it, stores info in endData[1]
   endData[1] = timeDown(endData[1]);
   //needed number is now in endData[0]
   endData[0] -= endData[1];
+  ////////////////Start Data
   //Below is the start data stuff
   //instead of creating a function to round up, we just add 19 min cuz itl do the same thing unless someone starts on the minute, in which case itl use that start
   startData[1] = timeUp(startData[1]);
-  startData[0] += startData[1]; 
-
+  startData[0] += startData[1];
+  //////////////Math
   //find actual working time:
   workLength = endData[0] - startData[0];
   rotations = 0;
-  while (workLength >= 20){
+  changeNumber = chosenPositions.indexOf(prefSpot) + 1;
+  while (workLength >= rotationType){
     rotations++;
-    workLength -= 20;
-    /*
-    if (rotations > 5){
-      rotations = 0;
+    changeNumber--;
+    workLength -= rotationType;
+    if (changeNumber < 0){
+      changeNumber += chosenPositions.length;
     }
-    */
+    
   }
-  console.log(rotations);
+  console.log("rotations:", rotations);
+  console.log("changeNumber:", changeNumber);
+  console.log("result:", chosenPositions[changeNumber])
 });
 
 
@@ -61,11 +80,11 @@ function convertToMinutes(t) {
     return [hours * 60 + minutes, minutes];
 }
 
-// Fuction to find minutes to nearest LOWER time change
+// Fuction to find minutes to nearest SOONER rotation
 function timeDown(t){
   let calcArray = [];
-  for (let i = 0; i < rotationMinutes.length; i++){
-    calcArray.push(t - rotationMinutes[i])
+  for (let i = 0; i < rotationTime.length; i++){
+    calcArray.push(t - rotationTime[i])
   }
   calcArray = calcArray.filter(num => num >= 0);
   if (calcArray.length === 0){
@@ -76,15 +95,15 @@ function timeDown(t){
   }
 }
 
-//Function to find minutes to nearest GREATER time change
+//Function to find minutes to nearest LATER rotation
 function timeUp(t){
   let calcArray = [];
-  for (let i = 0; i < rotationMinutes.length; i++){
-    calcArray.push(rotationMinutes[i] - t);
+  for (let i = 0; i < rotationTime.length; i++){
+    calcArray.push(rotationTime[i] - t);
   }
   calcArray = calcArray.filter(num => num >= 0);
   if (calcArray.length === 0){
-    return 60 - t + rotationMinutes[0];
+    return 60 - t + rotationTime[0];
   } else{
     calcArray = Math.min(...calcArray);
     return calcArray;
