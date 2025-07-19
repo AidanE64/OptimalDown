@@ -12,6 +12,7 @@ let chosenPositions;
 let rotationTime;
 let rotationType;
 let changeNumber;
+let WLength;
 //Constants
 const AIOSpositions = ["Down Before Lap", "Lap Chair", "Lap Walking", "Therapy", "Down Before Windows", "Windows", "Peninsula"];
 const AIWPpositions = ["Down Before Windows", "Windows", "PeninsulaD"]
@@ -41,7 +42,10 @@ document.getElementById('shiftForm').addEventListener('submit', function(e) {
   endData = convertToMinutes(end);
   //////////////Pref Spots
   // Get the preferred spot from the dropdown
-  prefSpot = document.querySelector('input[name="preferedEndR"]:checked')?.value;
+  const radios = document.querySelectorAll('input[name="preferedEndR"]');
+  radios.forEach(radio => console.log(radio.id, radio.value, radio.checked));
+  prefSpot = document.querySelector('input[name="preferedEndR"]:checked')?.value.trim();
+  console.log("Selected preferedEndR:", document.querySelector('input[name="preferedEndR"]:checked')?.value);
   rotationType = parseInt(document.querySelector('input[name="rotationType"]:checked')?.value);
   /////////////////End Data
   //Below is the end data stuff
@@ -57,22 +61,39 @@ document.getElementById('shiftForm').addEventListener('submit', function(e) {
   //////////////Math
   //find actual working time:
   workLength = endData[0] - startData[0];
+  //Run the rotation logic for the pref spot
+  WLength = workLength
+  rotationLogic(prefSpot, WLength);
+  //Continues Rotaiton Logic for other spots
+  console.log("rotations:", rotations);
+  console.log("changeNumber:", changeNumber);
+  console.log("result:", chosenPositions[changeNumber])
+
+  for (let i = 0; i < chosenPositions.length; i++){
+    let spot = chosenPositions[i];
+    WLength = workLength
+    if (spot === prefSpot){
+
+    }else {
+      rotationLogic(spot, WLength);
+      console.log(chosenPositions[changeNumber], " : ", spot);
+    }
+  }
+});
+
+function rotationLogic(spot, WLength){
   rotations = 0;
-  changeNumber = chosenPositions.indexOf(prefSpot) + 1;
-  while (workLength >= rotationType){
+  changeNumber = chosenPositions.indexOf(spot);
+  while (WLength >= rotationType){
     rotations++;
     changeNumber--;
-    workLength -= rotationType;
+    WLength -= rotationType;
     if (changeNumber < 0){
       changeNumber += chosenPositions.length;
     }
     
   }
-  console.log("rotations:", rotations);
-  console.log("changeNumber:", changeNumber);
-  console.log("result:", chosenPositions[changeNumber])
-});
-
+}
 
 // Function to convert time in "HH:MM" format to total minutes
 function convertToMinutes(t) {
