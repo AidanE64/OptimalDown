@@ -64,6 +64,7 @@ document.getElementById('shiftForm').addEventListener('submit', function(e) {
   //Run the rotation logic for the pref spot
   WLength = workLength
   rotationLogic(prefSpot, WLength);
+  document.getElementById("1Spot").textContent = chosenPositions[changeNumber];
   //Continues Rotaiton Logic for other spots
   console.log("rotations:", rotations);
   console.log("changeNumber:", changeNumber);
@@ -76,10 +77,16 @@ document.getElementById('shiftForm').addEventListener('submit', function(e) {
 
     }else {
       rotationLogic(spot, WLength);
+      addToList(spot);
       console.log(chosenPositions[changeNumber], " : ", spot);
     }
   }
+  document.getElementById("resultsContainer").style.display = "inline-block";
 });
+
+function addToList(spot){
+  document.getElementById("resultsContainer").innerHTML += "<p>" + chosenPositions[changeNumber] + " : " + spot + "</p>";
+}
 
 function rotationLogic(spot, WLength){
   rotations = 0;
