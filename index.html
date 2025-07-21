@@ -35,30 +35,24 @@
             <input type="time" id="poolClose" name="shiftEnd" required>
             <br>
             <h3>Optional information:</h3>
-            <div id="rotationTypeContainer">
-                <p>Choose your rotation type:</p>
-                <label for="20s">20s</label>
-                <input type="radio" id="20s" name="rotationType" value=20 checked>
-                <label for="30s">30s</label>
-                <input type="radio" id="30s" name="rotationType" value=30>
+            <div id="rotationTypeContainer" class="dropContainer">
+                <label for="rotationTypes">Choose your rotation type:</label>
+                <select name="rotationTypes" id="rotationTypes">
+                    <option value="17_37_57">17, 37, 57</option>
+                    <option value="27_57">27, 57</option>
+                </select>
             </div>
-            <br>
-            <label for="shiftEnd">(ONLY FOR CLOSING SHIFTS) Shift End:</label>
-            <input type="time" id="shiftEnd" name="weirdEnd">
-            <br>
-            <div id="preferedEnd">
-                <p>OptimalDown will assume that your "Prefered End" is down, however if you are weird you can change it</p>
-                <label for="downTag">| Down >>></label>
-                <input type="radio" id="downTag" name="preferedEndR" value = "Down Before Windows" checked>
-                <label for="windowsTag">| Windows >>></label>
-                <input type="radio" id="windowsTag" value = "windows" name="preferedEndR">
-                <label for="peninsulaTag">| Peninsula >>></label>
-                <input type="radio" id="peninsulaTag" value = "peninsula" name="preferedEndR">
-                <label for="lapTag">| Lap >>></label>
-                <input type="radio" id="lapTag" value = "lap" name="preferedEndR">
-                <label for="therapyTag">| Therapy >>></label>
-                <input type="radio" id="therapyTag" value = "therapy" name="preferedEndR">
-                |
+            <div id="preferedEnd" class="dropContainer">
+                <label for="prefEndSelect">OptimalDown will assume that your "Prefered End" is down, however if you are weird you can change it</label>
+                <select name="prefEndSelect" id="prefEndSelect">
+                    <option value="Down Before Windows">Down Before Windows</option>
+                    <option value="Windows">Windows</option>
+                    <option value="Peninsula">Peninsula</option>
+                    <option value="Down Before Lap">Down Before Lap</option>
+                    <option value="Lap Chair">Lap Chair</option>
+                    <option value="Lap Walking">Lap Walking</option>
+                    <option value="Therapy">Therapy</option>
+                </select>
             </div>
             <br>
             <button type="submit">Submit</button>
