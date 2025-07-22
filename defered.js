@@ -15,7 +15,7 @@ let changeNumber;
 let WLength;
 //Constants
 const AIOSpositions = ["Down Before Lap", "Lap Chair", "Lap Walking", "Therapy", "Down Before Windows", "Windows", "Peninsula"];
-const AIWPpositions = ["Down Before Windows", "Windows", "PeninsulaD"]
+const AIWPpositions = ["Down Before Windows", "Windows", "Peninsula"]
 const AIMGpositions = ["Down Before Lap", "Lap Chair", "Therapy"]
 let LordsPositions;
 let WindPositions;
@@ -42,11 +42,10 @@ document.getElementById('shiftForm').addEventListener('submit', function(e) {
   endData = convertToMinutes(end);
   //////////////Pref Spots
   // Get the preferred spot from the dropdown
-  const radios = document.querySelectorAll('input[name="preferedEndR"]');
-  radios.forEach(radio => console.log(radio.id, radio.value, radio.checked));
-  prefSpot = document.querySelector('input[name="preferedEndR"]:checked')?.value.trim();
-  console.log("Selected preferedEndR:", document.querySelector('input[name="preferedEndR"]:checked')?.value);
-  rotationType = parseInt(document.querySelector('input[name="rotationType"]:checked')?.value);
+  prefSpot = document.getElementById('prefEndSelect')?.value.trim();
+  console.log("Selected preferedEnd", prefSpot);
+  rotationType = parseInt(document.getElementById('rotationTypes')?.value);
+  console.log("RotationType:", rotationType)
   /////////////////End Data
   //Below is the end data stuff
   //gets the difference between the desired time and the last rotation before it, stores info in endData[1]
