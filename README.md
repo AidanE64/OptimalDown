@@ -1,2 +1,2 @@
 # OptimalDown
-A web app for those working in a specific aquatic pool to check and see where they should start their shift in order to end as a down guard
+A website for those trying to find where they will end their shifts when working at an Elgin (IL) aqautic facility.
